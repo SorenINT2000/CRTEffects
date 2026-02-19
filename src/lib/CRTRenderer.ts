@@ -22,6 +22,8 @@ interface ShaderLocations {
   noiseIntensity: WebGLUniformLocation | null;
   vignetteIntensity: WebGLUniformLocation | null;
   rollSpeed: WebGLUniformLocation | null;
+  enableStutter: WebGLUniformLocation | null;
+  stutterFrequency: WebGLUniformLocation | null;
 }
 
 export class CRTRenderer {
@@ -113,6 +115,8 @@ export class CRTRenderer {
       noiseIntensity: gl.getUniformLocation(p, 'u_noiseIntensity'),
       vignetteIntensity: gl.getUniformLocation(p, 'u_vignetteIntensity'),
       rollSpeed: gl.getUniformLocation(p, 'u_rollSpeed'),
+      enableStutter: gl.getUniformLocation(p, 'u_enableStutter'),
+      stutterFrequency: gl.getUniformLocation(p, 'u_stutterFrequency'),
     };
   }
 
@@ -223,6 +227,8 @@ export class CRTRenderer {
     gl.uniform1f(this.locations.noiseIntensity, this.config.noiseIntensity);
     gl.uniform1f(this.locations.enableRoll, this.config.roll ? 1.0 : 0.0);
     gl.uniform1f(this.locations.rollSpeed, this.config.rollSpeed);
+    gl.uniform1f(this.locations.enableStutter, this.config.stutter ? 1.0 : 0.0);
+    gl.uniform1f(this.locations.stutterFrequency, this.config.stutterFrequency);
     gl.uniform2f(this.locations.resolution, this.canvas.width, this.canvas.height);
 
     if (this.config.jitter) {

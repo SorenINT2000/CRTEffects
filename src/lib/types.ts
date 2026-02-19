@@ -11,6 +11,8 @@ export interface CRTConfig {
   noiseIntensity: number;
   roll: boolean;
   rollSpeed: number;
+  stutter: boolean;
+  stutterFrequency: number;
 }
 
 export interface Vec2 {
@@ -33,4 +35,6 @@ export const DEFAULT_CONFIG: CRTConfig = {
   noiseIntensity: 0.1,
   roll: true,
   rollSpeed: 2.0,
+  stutter: true,
+  stutterFrequency: 0.05,
 };

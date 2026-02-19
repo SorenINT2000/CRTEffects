@@ -17,6 +17,7 @@ const SETTINGS: SettingDef[] = [
   { toggleKey: 'noise', paramKey: 'noiseIntensity', label: 'Noise Amt', min: 0.0, max: 0.5, step: 0.01, decimals: 2 },
   { toggleKey: 'vignette', paramKey: 'vignetteIntensity', label: 'Vignette', min: 0.0, max: 1.5, step: 0.1, decimals: 1 },
   { toggleKey: 'jitter', paramKey: 'jitterIntensity', label: 'RGB Jitter', min: 0.0, max: 2.0, step: 0.1, decimals: 1 },
+  { toggleKey: 'stutter', paramKey: 'stutterFrequency', label: 'Stutter', min: 0.0, max: 0.2, step: 0.005, decimals: 3 },
 ];
 
 const TRANSITIONS: { type: TransitionType; label: string }[] = [

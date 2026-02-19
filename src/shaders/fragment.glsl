@@ -25,10 +25,17 @@ uniform float u_noiseIntensity;
 uniform float u_enableRoll;
 uniform float u_rollSpeed;     
 
-uniform float u_bendFactor;    
+uniform float u_bendFactor;
+
+uniform float u_enableStutter;
+uniform float u_stutterFrequency;
 
 in vec2 texCoords;
 out vec4 outColor;
+
+float random(vec2 st) {
+    return fract(sin(dot(st, vec2(12.9898, 78.233))) * 43758.5453123);
+}
 
 vec2 crtCoords(vec2 uv, float bendFactor) {
     uv -= 0.5;
@@ -50,10 +57,23 @@ void main() {
         return;
     }
 
+    // 0. Stutter — randomly resample from a time-frozen offset
+    vec2 sampleUV = crtUV;
+    if (u_enableStutter > 0.5 && u_stutterFrequency > 0.0) {
+        float stutterNoise = random(vec2(floor(u_time * 10.0), floor(uv.y * 50.0)));
+        if (stutterNoise < u_stutterFrequency * 5.0) {
+            float frozenTime = floor(u_time * 3.0) / 3.0;
+            sampleUV += vec2(
+                sin(frozenTime * 2.0) * 0.01,
+                cos(frozenTime * 1.5) * 0.008
+            );
+        }
+    }
+
     // RGB Jitter
-    float r = texture(texture0, crtUV + u_redOffset).r;
-    float g = texture(texture0, crtUV).g;
-    float b = texture(texture0, crtUV + u_blueOffset).b;
+    float r = texture(texture0, sampleUV + u_redOffset).r;
+    float g = texture(texture0, sampleUV).g;
+    float b = texture(texture0, sampleUV + u_blueOffset).b;
     vec4 color = vec4(r, g, b, 1.0);
 
     // Auxiliary Textures
